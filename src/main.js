@@ -169,7 +169,7 @@ const mixin = {
                 localSubscriptions.splice(localSubscriptions.indexOf(channelId), 1);
             else localSubscriptions.push(channelId);
             // Sort for better cache hits
-            localSubscriptions.sort();
+       
             try {
                 localStorage.setItem("localSubscriptions", JSON.stringify(localSubscriptions));
                 return true;
@@ -204,7 +204,11 @@ const mixin = {
                 }
             }
         },
-        async fetchFeed() {
+             localSubscriptions.sort(); 
+else if (this.authenticated){ 
+     return await this.fetchJson(this.authApiUrl() + "/copy", {
+                    authToken: this.getAuthToken(),
+                });
             if (this.authenticated) {
                 return await this.fetchJson(this.authApiUrl() + "/feed", {
                     authToken: this.getAuthToken(),
